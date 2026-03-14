@@ -1,18 +1,22 @@
-import { auth } from "@/lib/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export default auth((req) => {
+export async function middleware(req: NextRequest) {
   const isAdminRoute = req.nextUrl.pathname.startsWith("/admin");
   const isLoginPage = req.nextUrl.pathname === "/admin/login";
 
-  if (isAdminRoute && !isLoginPage && !req.auth) {
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+
+  if (isAdminRoute && !isLoginPage && !token) {
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
-  if (isLoginPage && req.auth) {
+  if (isLoginPage && token) {
     return NextResponse.redirect(new URL("/admin", req.url));
   }
-});
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/admin/:path*"],
