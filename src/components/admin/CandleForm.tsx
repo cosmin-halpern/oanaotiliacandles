@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { X, ImagePlus } from "lucide-react";
+import { X, ImagePlus, Loader2 } from "lucide-react";
 
 const schema = z.object({
   name: z.string().min(2, "Minim 2 caractere"),
@@ -35,7 +34,9 @@ interface CandleFormProps {
 export function CandleForm({ initialData, categories }: CandleFormProps) {
   const router = useRouter();
   const [images, setImages] = useState<string[]>(initialData?.images ?? []);
+  const [uploading, setUploading] = useState(false);
   const [serverError, setServerError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
     register,
@@ -57,6 +58,25 @@ export function CandleForm({ initialData, categories }: CandleFormProps) {
       isFeatured: initialData?.isFeatured ?? false,
     },
   });
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+    setUploading(true);
+
+    for (const file of files) {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: form });
+      if (res.ok) {
+        const { url } = await res.json();
+        setImages((prev) => [...prev, url]);
+      }
+    }
+
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   async function onSubmit(data: FormValues) {
     setServerError("");
@@ -101,27 +121,32 @@ export function CandleForm({ initialData, categories }: CandleFormProps) {
             </div>
           ))}
 
-          <CldUploadWidget
-            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? "candles_unsigned"}
-            onSuccess={(result) => {
-              const info = result.info;
-              if (info && typeof info === "object" && !Array.isArray(info) && "secure_url" in info) {
-                setImages((prev) => [...prev, (info as { secure_url: string }).secure_url]);
-              }
-            }}
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="w-24 h-24 rounded-xl border-2 border-dashed border-amber/30 hover:border-amber flex flex-col items-center justify-center gap-1 text-warm-gray hover:text-amber transition-colors disabled:opacity-50"
           >
-            {({ open }) => (
-              <button
-                type="button"
-                onClick={() => open()}
-                className="w-24 h-24 rounded-xl border-2 border-dashed border-amber/30 hover:border-amber flex flex-col items-center justify-center gap-1 text-warm-gray hover:text-amber transition-colors"
-              >
+            {uploading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <>
                 <ImagePlus className="h-5 w-5" />
                 <span className="text-xs">Adaugă</span>
-              </button>
+              </>
             )}
-          </CldUploadWidget>
+          </button>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            className="hidden"
+            onChange={handleFileChange}
+          />
         </div>
+        <p className="text-xs text-warm-gray mt-3">JPG, PNG sau WebP. Poți adăuga mai multe imagini.</p>
       </div>
 
       {/* Basic info */}
@@ -176,7 +201,7 @@ export function CandleForm({ initialData, categories }: CandleFormProps) {
         </label>
         <label className="flex items-center gap-3 cursor-pointer">
           <input type="checkbox" {...register("isFeatured")} className="w-4 h-4 accent-amber" />
-          <span className="text-sm text-warm-brown">Produse populare (afișat pe homepage)</span>
+          <span className="text-sm text-warm-brown">Popular (afișat pe homepage)</span>
         </label>
       </div>
 
