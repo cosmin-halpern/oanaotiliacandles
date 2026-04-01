@@ -8,14 +8,14 @@
 
 ---
 
-## 2. Cloudinary (image hosting, free tier)
+## 2. Vercel Blob (image hosting, free up to 5GB)
 
-1. Sign up at [cloudinary.com](https://cloudinary.com)
-2. Dashboard → **Settings → Upload → Upload presets** → Add preset
-   - Name: `candles_unsigned`
-   - Signing mode: **Unsigned**
-   - Folder: `candles`
-3. Copy `Cloud name`, `API Key`, `API Secret` from the Dashboard
+After deploying to Vercel (step 4):
+1. Vercel Dashboard → your project → **Storage** tab → **Create Blob store**
+2. Name it `candles-images` → Create
+3. Vercel automatically adds `BLOB_READ_WRITE_TOKEN` to your environment variables
+
+That's it — no extra account needed.
 
 ---
 
@@ -83,7 +83,7 @@ After deploying, update the Stripe webhook URL to your production domain:
 - [ ] `AUTH_SECRET` is a strong random string (`openssl rand -base64 32`)
 - [ ] `ADMIN_PASSWORD` is changed from the seed default
 - [ ] Stripe is in **live mode** (not test)
-- [ ] Cloudinary upload preset `candles_unsigned` exists
+- [ ] Vercel Blob store created and `BLOB_READ_WRITE_TOKEN` is in env vars
 - [ ] Resend domain is verified
 - [ ] Webhook endpoint registered in Stripe with correct signing secret
 - [ ] `NEXTAUTH_URL` matches your production domain exactly

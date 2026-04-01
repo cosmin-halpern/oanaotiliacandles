@@ -14,18 +14,13 @@ export default function AboutPage() {
       </h1>
       <div className="prose prose-lg text-warm-gray space-y-5">
         <p>
-          Totul a început cu o pasiune pentru miresme și dorința de a transforma orice cameră
-          într-un spațiu de liniște. Fiecare lumânare pe care o creăm este turnată manual,
-          cu atenție la fiecare detaliu — de la alegerea parfumului până la eticheta finală.
+          Numele meu este Oana Otilia și sunt un mic antreprenor din București, creator de lumânări din ceară de soia.
         </p>
         <p>
-          Folosim exclusiv ceară naturală de soia, uleiuri esențiale pure și fitiluri din bumbac
-          netratat. Fără parafină, fără parfumuri sintetice, fără compromisuiri.
+          Brandul meu s-a născut din convingerea că o lumânare poate fi mai mult decât un simplu obiect decorativ — poate deveni o experiență, o stare, o poveste. Fiecare lumânare este turnată manual, cu grijă și atenție la fiecare detaliu, de la selecția uleiurilor parfumate până la forma și eticheta finală.
         </p>
         <p>
-          Credem că o lumânare bună poate transforma o seară obișnuită într-un ritual.
-          Fie că e pentru relaxare, pentru o cină romantică sau pur și simplu pentru a umple
-          casa cu un parfum minunat — lumânările noastre sunt acolo.
+          Pentru mine, fiecare aromă are o emoție, iar fiecare lumânare spune o poveste unică — una care așteaptă să fie descoperită.
         </p>
       </div>
 
