@@ -27,7 +27,9 @@ export default function LoginPage() {
       setError("Email sau parolă incorectă.");
       setLoading(false);
     } else {
-      window.location.href = "/admin";
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 500);
     }
   }
 
