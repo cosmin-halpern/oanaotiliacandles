@@ -19,10 +19,9 @@ export default async function HomePage() {
   }
 
   const categories = [
-    { name: "Relaxare", slug: "relaxare", emoji: "🌿", desc: "Lavandă, Mușețel, Ceai verde" },
-    { name: "Romantism", slug: "romantism", emoji: "🌹", desc: "Trandafir, Iasomie, Santal" },
     { name: "Casă & Ambient", slug: "casa", emoji: "🏡", desc: "Vanilie, Scorțișoară, Cedru" },
-    { name: "Sezon", slug: "sezon", emoji: "🍂", desc: "Colecții limitate" },
+    { name: "Relaxare", slug: "relaxare", emoji: "🌿", desc: "Lavandă, Mușețel, Ceai verde" },
+    { name: "Colecții Sezoniere", slug: "sezon", emoji: "🍂", desc: "Ediții limitate pentru fiecare anotimp" },
   ];
 
   return (
@@ -83,7 +82,7 @@ export default async function HomePage() {
           <p className="text-warm-gray text-center mb-10 text-sm">
             Găsește aroma perfectă pentru fiecare moment
           </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {categories.map((cat) => (
               <Link
                 key={cat.slug}

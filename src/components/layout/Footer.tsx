@@ -48,9 +48,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               {[
                 { href: "/shop", label: "Toate produsele" },
-                { href: "/shop?category=relaxare", label: "Relaxare" },
-                { href: "/shop?category=romantism", label: "Romantism" },
                 { href: "/shop?category=casa", label: "Casă & Ambient" },
+                { href: "/shop?category=relaxare", label: "Relaxare" },
+                { href: "/shop?category=sezon", label: "Colecții Sezoniere" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
