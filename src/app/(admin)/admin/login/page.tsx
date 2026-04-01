@@ -27,8 +27,7 @@ export default function LoginPage() {
       setError("Email sau parolă incorectă.");
       setLoading(false);
     } else {
-      router.push("/admin");
-      router.refresh();
+      window.location.href = "/admin";
     }
   }
 
