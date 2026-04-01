@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, ClipboardList, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, ClipboardList, Tag, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +10,7 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/candles", label: "Lumânări", icon: Package, exact: false },
   { href: "/admin/orders", label: "Comenzi", icon: ClipboardList, exact: false },
+  { href: "/admin/categories", label: "Categorii", icon: Tag, exact: false },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
