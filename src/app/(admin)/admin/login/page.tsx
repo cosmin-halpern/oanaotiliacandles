@@ -23,11 +23,12 @@ export default function LoginPage() {
       redirect: false,
     });
 
-    if (result?.error) {
+    if (result?.error || result?.ok === false) {
       setError("Email sau parolă incorectă.");
       setLoading(false);
     } else {
       router.push("/admin");
+      router.refresh();
     }
   }
 
